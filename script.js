@@ -1,49 +1,52 @@
-document.addEventListener("DOMContentLoaded", function () {
+const express = require('express');
+const cors = require('cors');
+const { encodePassword, generateToken } = require('./hash');
+const app = express();
 
-    const togglePasswordIcons = document.querySelectorAll(".toggle-password");
+app.use(cors());
+app.use(express.json());
 
-    togglePasswordIcons.forEach(icon => {
-        icon.addEventListener("click", function () {
-            const passwordInput = this.previousElementSibling;
-            if (passwordInput.type === "password") {
-                passwordInput.type = "text";
-                this.src = "eye-open.png"; 
-            } else {
-                passwordInput.type = "password";
-                this.src = "eye-closed.png"; 
-            }
-        });
-    });
+const users = [];
 
-    const formInputs = document.querySelectorAll("input");
-    let formData = {};
+app.post('/sign-up', (req, res) => {
+  const { email, password } = req.body;
 
-    formInputs.forEach(input => {
-        input.addEventListener("input", function () {
-            formData[this.id] = this.value; 
-        });
-    });
+  if (!email || !password) {
+    return res.status(400).json({ message: 'Email and password are required!' });
+  }
 
-    const submitButtons = document.querySelectorAll(".black-button");
+  if (password.length < 8) {
+    return res.status(400).json({ message: 'Password length should be minimum 8 symbols!' });
+  }
 
-    submitButtons.forEach(button => {
-        button.addEventListener("click", function (e) {
-            e.preventDefault(); 
+  if (users.find(user => user.email === email)) {
+    return res.status(400).json({ message: 'User with this email already exists!' });
+  }
 
-            const form = button.closest('form');
-            const isSignIn = form.id === "signin-form";
-            const emailKey = isSignIn ? "signin-email" : "signup-email";
-            const passwordKey = isSignIn ? "signin-password" : "signup-password";
+  const hashedPassword = encodePassword(password);
 
-            if (formData[emailKey] && formData[passwordKey]) {
-                console.log(isSignIn ? "Sign In:" : "Sign Up:", {
-                    email: formData[emailKey],
-                    password: formData[passwordKey]
-                });
-                window.location.href = "index2.html"; 
-            } else {
-                alert("ЭЭЭЭЭ Ты чо ЕБАНУТАЯ, А НИЧО ТОТ ФАКТ ТО ЧТО НУЖНО ВВЕСТИ ПАРОЛЬ И ИМЕЙЛ");
-            }
-        });
-    });
+  users.push({ email, password: hashedPassword });
+
+  res.status(201).json({ message: 'Реєстрація успішна!' });
+});
+
+app.post('/sign-in', (req, res) => {
+  const { email, password } = req.body;
+
+  if (!email || !password) {
+    return res.status(400).json({ message: 'Email and password are required!' });
+  }
+
+  const user = users.find(u => u.email === email);
+
+  if (!user || user.password !== encodePassword(password)) {
+    return res.status(401).json({ message: 'Incorrect email or password!' });
+  }
+
+  const token = generateToken(email);
+  res.status(200).json({ "token" : generateToken(email) });
+});
+
+app.listen(3000, () => {
+  console.log('Server is running on http://localhost:3000');
 });
