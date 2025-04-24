@@ -1,0 +1,117 @@
+/* Загальні стилі */
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    font-family: "Work Sans", sans-serif;
+    background-color: #ffffff;
+}
+
+.container {
+    text-align: center;
+    width: 100%;
+}
+
+.form-container {
+    max-width: 400px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+/* Логотип */
+.logo {
+    display: inline-block;
+    margin: 0 auto 20px;
+    width: 120px;
+    height: auto;
+    font-size: 24px;
+    font-weight: bold;
+    padding: 10px;
+    background: #d3d3d3;
+    border-radius: 5px;
+    border: 1px solid #AFB1B6; /* Додано обводку */
+    color: black;
+}
+
+h2.welcome {
+    font-size: 24px;
+    font-weight: 400;
+    margin-bottom: 10px;
+}
+
+h3.subtitle {
+    font-size: 20px;
+    font-weight: 400;
+    margin-bottom: 30px;
+}
+
+/* Інпут */
+.input-group {
+    text-align: left;
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.input-group label {
+    display: block;
+    font-size: 14px;
+    color: #61646B;
+    margin-bottom: 5px;
+}
+
+.input-group input {
+    width: 100%;
+    height: 40px;
+    padding: 8px;
+    border: 1px solid #AFB1B6;
+    border-radius: 5px;
+    font-size: 16px;
+    box-sizing: border-box;
+}
+
+/* Іконка ока */
+.toggle-password {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
+
+/* Кнопка */
+.black-button {
+    display: block;
+    padding: 12px;
+    width: 400px;
+    background-color: black;
+    color: white;
+    text-align: center;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    margin-top: 10px; /* Додає відступ зверху */
+}
+
+.black-button:hover {
+    background-color: #333;
+}
+
+/* Посилання */
+.login-text {
+    font-size: 14px;
+    margin-top: 15px;
+    color: #121212;
+}
+
+.login-text a {
+    text-decoration: underline;
+    color: #121212;
+    font-weight: bold;
+}
